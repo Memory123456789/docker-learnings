@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Krishna’s DevOps Dashboard 🚀</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background-color: white; color: black; }
+        .dark-theme { background-color: #121212; color: white; }
+        section { margin-bottom: 30px; padding: 15px; border: 1px solid #ccc; border-radius: 10px; }
+        button { padding: 5px 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🌟 Welcome to Krishna’s Dashboard</h1>
+
+    <section>
+        <h2>📅 Current Info</h2>
+        <p>Time: {{ current_time }}</p>
+        <p>Your IP: {{ client_ip }}</p>
+    </section>
+
+    <section>
+        <h2>📬 Contact Me</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required><br><br>
+            <input type="email" placeholder="Your Email" required><br><br>
+            <textarea placeholder="Your Message" rows="4"></textarea><br><br>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>📝 To-Do List</h2>
+        <ul>
+            <li>✅ Learn Django</li>
+            <li>✅ Dockerize app</li>
+            <li>🕒 Deploy on EC2</li>
+            <li>🔜 Add CI/CD pipeline</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>👁️ Visitor Counter</h2>
+        <p>Total Visitors: {{ visitor_count }}</p>
+    </section>
+
+    <section>
+        <h2>🧠 Fun API Fact</h2>
+        <p>{{ cat_fact }}</p>
+    </section>
+
+    <section>
+        <h2>🎨 Theme Switcher</h2>
+        <button onclick="toggleTheme()">Toggle Dark/Light</button>
+    </section>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle("dark-theme");
+        }
+    </script>
+</body>
+</html>
