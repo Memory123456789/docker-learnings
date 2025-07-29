@@ -23,13 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-c-c#kgmu9p-ccfxrahb#+om#b^grqocx5am1gx)ecb3d5+$#4j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # To run this on EC2 or external IP, set HOST_IP:
 # Example: HOST_IP=52.66.246.92 python manage.py runserver 0.0.0.0:8000
 
 import os
-ALLOWED_HOSTS = [os.environ.get('HOST_IP', 'localhost')]
+ALLOWED_HOSTS = [os.getenv("DJANGO_ALLOWED_HOST", "localhost")]
 
 
 
