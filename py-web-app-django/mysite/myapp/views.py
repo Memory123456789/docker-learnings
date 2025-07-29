@@ -1,30 +1,32 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import ContactForm
+from django.http import HttpRequest
 from datetime import datetime
-import socket
+import requests
 
-def home(request):
-    return render(request, "home.html")
+visitor_count = 0  # Basic visitor counter (in-memory, resets on server restart)
 
-def show_time_ip(request):
-    ip = request.META.get('REMOTE_ADDR')
-    time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return HttpResponse(f"Current Time: {time} | Your IP: {ip}")
+def dashboard(request: HttpRequest):
+    global visitor_count
+    visitor_count += 1
 
-def counter_view(request):
-    count = request.session.get('count', 0)
-    request.session['count'] = count + 1
-    return HttpResponse(f"Visitor count: {count + 1}")
+    # Get client IP
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    ip = x_forwarded_for.split(',')[0] if x_forwarded_for else request.META.get('REMOTE_ADDR')
 
-def contact(request):
-    if request.method == "POST":
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            return HttpResponse(f"Thanks, {data['name']}! We received your message.")
-    else:
-        form = ContactForm()
-    return render(request, "contact.html", {"form": form})
+    # API data (example with random cat fact)
+    cat_fact = None
+    try:
+        response = requests.get("https://catfact.ninja/fact")
+        if response.status_code == 200:
+            cat_fact = response.json().get("fact")
+    except:
+        cat_fact = "Could not fetch cat fact."
 
+    context = {
+        "current_time": datetime.now(),
+        "client_ip": ip,
+        "visitor_count": visitor_count,
+        "cat_fact": cat_fact,
+    }
 
+    return render(request, "dashboard.html", context)
