@@ -29,4 +29,4 @@ def dashboard(request: HttpRequest):
         "cat_fact": cat_fact,
     }
 
-    return render(request, "dashboard.html", context)
+    return render(request, "myapp/dashboard.html", context)
